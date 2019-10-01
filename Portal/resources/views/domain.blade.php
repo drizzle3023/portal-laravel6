@@ -12,11 +12,11 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Domains</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">@lang('messages.Domains')</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">App</li>
-                        <li class="breadcrumb-item active" aria-current="page">Domains</li>
+                        <li class="breadcrumb-item">@lang('messages.App')</li>
+                        <li class="breadcrumb-item active" aria-current="page">@lang('messages.Domains')</li>
                     </ol>
                 </nav>
             </div>
@@ -28,7 +28,7 @@
     <div class="content">
         <div class="block block-rounded block-bordered">
             <div class="block-header block-header-default d-flex justify-content-between">
-                <h3 class="block-title">Domain List</h3>
+                <h3 class="block-title">@lang('messages.Domain List')</h3>
                 <a class="" href="#" data-toggle="modal" data-target="#help-modal">
                     <i class="si si-question"></i></a>
             </div>
@@ -37,9 +37,9 @@
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
-                        <th class="d-none d-sm-table-cell">Domain</th>
-                        <th class="d-none d-sm-table-cell" style="width: 120px;">State</th>
-                        <th class="d-none d-sm-table-cell" style="width: 120px;">Action</th>
+                        <th class="d-none d-sm-table-cell">@lang('messages.Domain')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 120px;">@lang('messages.State')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 120px;">@lang('messages.Action')</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,13 +51,13 @@
                             </td>
                             <td class="d-none d-sm-table-cell text-center">
                                 @if($domain->dns_active == 1)
-                                    <span class="badge badge-success">Active</span>
+                                    <span class="badge badge-success">@lang('messages.Active')</span>
                                 @else
-                                    <span class="badge badge-danger">Inactive</span>
+                                    <span class="badge badge-danger">@lang('messages.Inactive')</span>
                                 @endif
                             </td>
                             <td class="d-none d-sm-table-cell text-center">
-                                <a href="{{url('domains/check/').'/'.$domain->id}}" class="btn btn-primary btn-sm">Check</a>
+                                <a href="{{url('domains/check/').'/'.$domain->id}}" class="btn btn-primary btn-sm">@lang('messages.Check')</a>
                             </td>
                         </tr>
                     @endforeach

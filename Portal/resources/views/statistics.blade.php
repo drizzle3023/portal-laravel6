@@ -13,11 +13,11 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Statistics</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">@lang('messages.Statistics')</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">App</li>
-                        <li class="breadcrumb-item active" aria-current="page">Statistics</li>
+                        <li class="breadcrumb-item">@lang('messages.App')</li>
+                        <li class="breadcrumb-item active" aria-current="page">@lang('messages.Statistics')</li>
                     </ol>
                 </nav>
             </div>
@@ -35,43 +35,43 @@
             </div>
             <div class="block-content block-content-full">
                 <form action="{{url('/statistics')}}" method="get">
-                    <h2 class="content-heading pt-0">Criteria</h2>
+                    <h2 class="content-heading pt-0">@lang('messages.Criteria')</h2>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input">Time Range</label>
+                                <label for="example-text-input">@lang('messages.Time Range')</label>
                                 <div class="input-daterange input-group" data-date-format="yyyy-mm-dd" data-week-start="1" data-autoclose="true" data-today-highlight="true">
-                                    <input type="text" class="form-control" name="date_from" placeholder="From" data-week-start="1" data-autoclose="true" data-today-highlight="true" value="{{$date_from}}">
+                                    <input type="text" class="form-control" name="date_from" placeholder="@lang('messages.From')" data-week-start="1" data-autoclose="true" data-today-highlight="true" value="{{$date_from}}">
                                     <div class="input-group-prepend input-group-append">
                                         <span class="input-group-text font-w600">
                                             <i class="fa fa-fw fa-arrow-right"></i>
                                         </span>
                                     </div>
-                                    <input type="text" class="form-control" name="date_to" placeholder="To" data-week-start="1" data-autoclose="true" data-today-highlight="true" value="{{$date_to}}">
+                                    <input type="text" class="form-control" name="date_to" placeholder="@lang('messages.To')" data-week-start="1" data-autoclose="true" data-today-highlight="true" value="{{$date_to}}">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="d-block">Stats Type</label>
+                                <label class="d-block">@lang('messages.Stats Type')</label>
                                 <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                     <input type="radio" class="custom-control-input" id="example-radio-custom-inline1" name="stats_type" value="1" @if(isset($stats_type) && $stats_type == 1) checked @endif>
-                                    <label class="custom-control-label" for="example-radio-custom-inline1">Day</label>
+                                    <label class="custom-control-label" for="example-radio-custom-inline1">@lang('messages.Day')</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                     <input type="radio" class="custom-control-input" id="example-radio-custom-inline2" name="stats_type" value="2" @if(isset($stats_type) && $stats_type == 2) checked @endif>
-                                    <label class="custom-control-label" for="example-radio-custom-inline2">Month</label>
+                                    <label class="custom-control-label" for="example-radio-custom-inline2">@lang('messages.Month')</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                     <input type="radio" class="custom-control-input" id="example-radio-custom-inline3" name="stats_type" value="3" @if(isset($stats_type) && $stats_type == 3) checked @endif>
-                                    <label class="custom-control-label" for="example-radio-custom-inline3">Year</label>
+                                    <label class="custom-control-label" for="example-radio-custom-inline3">@lang('messages.Year')</label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-2 row">
                             <div style="position: absolute; bottom: 0; margin-bottom: 1rem;">
-                                <button type="submit"  class="btn btn-primary">Stats</button>
-                                <a href="{{url('/statistics')}}" class="btn btn-success">Clear</a>
+                                <button type="submit"  class="btn btn-primary">@lang('messages.Stats')</button>
+                                <a href="{{url('/statistics')}}" class="btn btn-success">@lang('messages.Clear')</a>
                             </div>
                         </div>
                     </div>
@@ -83,11 +83,11 @@
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
-                        <th class="d-none d-sm-table-cell" style="width: 250px;">Time</th>
-                        <th class="d-none d-sm-table-cell" style="width: 250px;">Sent</th>
-                        <th class="d-none d-sm-table-cell" style="width: 250px;">Spam</th>
-                        <th class="d-none d-sm-table-cell" style="width: 250px;">Attachment Blocked</th>
-                        <th class="d-none d-sm-table-cell" style="width: 250px;">Virus/Trojan</th>
+                        <th class="d-none d-sm-table-cell" style="width: 250px;">@lang('messages.Time')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 250px;">@lang('messages.Sent')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 250px;">@lang('messages.Spam')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 250px;">@lang('messages.Attachment Blocked')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 250px;">@lang('messages.Virus/Trojan')</th>
                     </tr>
                     </thead>
                     <tbody>

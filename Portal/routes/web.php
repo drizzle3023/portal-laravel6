@@ -17,6 +17,7 @@ Route::post('/login', 'AdminController@doLogin');
 Route::get('/logout', 'AdminController@logout');
 Route::get('/forgot-password', 'AdminController@showForgotPasswordPage');
 Route::post('/reset-password', 'AdminController@resetPassword');
+Route::get('locale/{locale?}', 'AdminController@setLocale');
 
 Route::middleware('user-auth')->group(function (){
     Route::get('/dashboard', 'AdminController@dashboard');

@@ -11,7 +11,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Profile</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">@lang('messages.Profile')</h1>
             </div>
         </div>
     </div>
@@ -25,16 +25,23 @@
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ $message }}</strong>
+                        <strong>@lang('messages.'.$message)</strong>
+                    </div>
+                @endif
+
+                @if ($message = Session::get('fail'))
+                    <div class="alert alert-danger alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>@lang('messages.'.$message)</strong>
                     </div>
                 @endif
 
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.
+                        @lang('messages.Whoops! There were some problems with your input.')
                         <ul>
                             @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                                <li>@lang('messages.'.$error)</li>
                             @endforeach
                         </ul>
                     </div>
@@ -42,26 +49,26 @@
 
                 <form action="/profile/edit" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <h2 class="content-heading pt-0">Account Info</h2>
+                    <h2 class="content-heading pt-0">@lang('messages.Account Info')</h2>
                     <div class="row push">
                         <div class="col-lg-4">
                             <p class="text-muted">
-                                Some vital information about your account
+                                @lang('messages.Some vital information about your account')
                             </p>
                         </div>
                         <div class="col-lg-8 col-xl-5">
                             <div class="form-group">
                                 <label>
-                                    Email
+                                    @lang('messages.Email')
                                 </label>
-                                <input type="email" class="form-control" name="email" placeholder="Email" disabled
+                                <input type="email" class="form-control" name="email" placeholder="@lang('messages.Email')" disabled
                                        value="{{$user->email}}">
                             </div>
                             <div class="form-group">
                                 <label>
-                                    Password <span class="text-danger">*</span>
+                                    @lang('messages.Password') <span class="text-danger">*</span>
                                 </label>
-                                <input type="password" class="form-control" name="password" placeholder="Password">
+                                <input type="password" class="form-control" name="password" placeholder="@lang('messages.Password')">
                             </div>
                         </div>
                     </div>
@@ -72,10 +79,10 @@
                         <div class="col-lg-8 col-xl-5 offset-lg-4">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-check-circle mr-1"></i> Submit
+                                    <i class="fa fa-check-circle mr-1"></i> @lang('messages.Submit')
                                 </button>
                                 <a class="btn btn-danger" href="{{url('/dashboard')}}">
-                                    <i class="fa fa-times-circle mr-1"></i> Cancel
+                                    <i class="fa fa-times-circle mr-1"></i> @lang('messages.Cancel')
                                 </a>
                             </div>
                         </div>

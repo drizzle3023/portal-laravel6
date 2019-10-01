@@ -25,19 +25,19 @@
                                 @csrf
                                 <div class="py-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-lg form-control-alt" id="login-username" name="login-username" placeholder="Email">
+                                        <input type="text" class="form-control form-control-lg form-control-alt" id="login-username" name="login-username" placeholder="@lang('messages.Email')">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-lg form-control-alt" id="login-password" name="login-password" placeholder="Password">
+                                        <input type="password" class="form-control form-control-lg form-control-alt" id="login-password" name="login-password" placeholder="@lang('messages.Password')">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-block btn-hero-lg btn-hero-primary">
-                                        <i class="fa fa-fw fa-sign-in-alt mr-1"></i> Sign In
+                                        <i class="fa fa-fw fa-sign-in-alt mr-1"></i> @lang('messages.Sign In')
                                     </button>
                                     <p class="mt-3 mb-0 d-lg-flex justify-content-lg-between">
                                         <a class="btn btn-sm btn-light d-block d-lg-inline-block mb-1" href="{{'/forgot-password'}}">
-                                            <i class="fa fa-exclamation-triangle text-muted mr-1"></i> Forgot password
+                                            <i class="fa fa-exclamation-triangle text-muted mr-1"></i> @lang('messages.Forgot password')
                                         </a>
                                     </p>
                                 </div>

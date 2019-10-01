@@ -6,21 +6,17 @@ namespace App\Http\Controllers;
 use App\Http\Models\Admin;
 use App\Http\Models\Blacklist;
 use App\Http\Models\Domain;
-use App\Http\Models\Currency;
 use App\Http\Models\Customer;
-use App\Http\Models\Invoices;
 use App\Http\Models\Log;
 use App\Http\Models\Product;
-use App\Http\Models\Employees;
 use App\Http\Models\Whitelist;
 use App\Http\Utils\Utils;
 use Exception;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\In;
-use Intervention\Image\Facades\Image;
-use Barryvdh\DomPDF\Facade as PDF;
 
 class AdminController
 {
@@ -129,6 +125,14 @@ class AdminController
             $pass[] = $alphabet[$n];
         }
         return implode($pass); //turn the array into a string
+    }
+
+    public function setLocale($locale='en') {
+        if (!in_array($locale, ['en', 'de'])){
+            $locale = 'en';
+        }
+        session()->put('locale', $locale);
+        return back();
     }
 
     public function dashboard()
@@ -993,7 +997,7 @@ class AdminController
             } else
                 $content .= "rcpt = \"" . '@' . $v->rcpt . "\";\n";
 
-            $content .= "apply {\nactions {\nreject = yes;\n}\n}\n}\n\n";
+            $content .= "apply {\nactions {\nreject = -10;\n}\n}\n}\n\n";
         }
 
         $content .= "#whitelist\n\n";

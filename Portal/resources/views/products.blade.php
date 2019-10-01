@@ -12,11 +12,11 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Products</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">@lang('messages.Products')</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">App</li>
-                        <li class="breadcrumb-item active" aria-current="page">Products</li>
+                        <li class="breadcrumb-item">@lang('messages.App')</li>
+                        <li class="breadcrumb-item active" aria-current="page">@lang('messages.Products')</li>
                     </ol>
                 </nav>
             </div>
@@ -37,11 +37,11 @@
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30%;">Name</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30%;">Domain</th>
-                        <th class="d-none d-sm-table-cell" style="width: 180px;">Allowed user</th>
-                        <th class="d-none d-sm-table-cell" style="width: 180px;">Currently Used</th>
-                        <th class="d-none d-sm-table-cell" style="width: 180px;">Free</th>
+                        <th class="d-none d-sm-table-cell" style="width: 30%;">@lang('messages.Name')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 30%;">@lang('messages.Domain')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 180px;">@lang('messages.Allowed user')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 180px;">@lang('messages.Currently Used')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 180px;">@lang('messages.Free')</th>
                     </tr>
                     </thead>
                     <tbody>

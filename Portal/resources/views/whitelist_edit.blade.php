@@ -10,12 +10,12 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Edit Whitelist</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">@lang('messages.Edit Whitelist')</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">App</li>
-                        <li class="breadcrumb-item " aria-current="page">Whitelist</li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                        <li class="breadcrumb-item">@lang('messages.App')</li>
+                        <li class="breadcrumb-item " aria-current="page">@lang('messages.Whitelist')</li>
+                        <li class="breadcrumb-item active" aria-current="page">@lang('messages.Edit')</li>
                     </ol>
                 </nav>
             </div>
@@ -31,23 +31,23 @@
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ $message }}</strong>
+                        <strong>@lang('messages.'.$message)</strong>
                     </div>
                 @endif
 
                 @if ($message = Session::get('fail'))
                     <div class="alert alert-danger alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ $message }}</strong>
+                        <strong>@lang('messages.'.$message)</strong>
                     </div>
                 @endif
 
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.
+                        @lang('messages.Whoops! There were some problems with your input.')
                         <ul>
                             @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                                <li>@lang('messages.'.$error)</li>
                             @endforeach
                         </ul>
                     </div>
@@ -56,24 +56,24 @@
                 <form action="{{url('/whitelist/edit')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!-- Vital Info -->
-                    <h2 class="content-heading pt-0">Vital Info</h2>
+                    <h2 class="content-heading pt-0">@lang('messages.Info')</h2>
                     <div class="row push">
                         <div class="col-lg-4">
                             <p class="text-muted">
-                                Some vital information
+                                @lang('messages.Information')
                             </p>
                         </div>
                         <div class="col-lg-8 col-xl-5">
                             <div class="form-group">
                                 <label for="dm-project-new-name">
-                                    From Address <span class="text-danger">*</span>
+                                    @lang('messages.From Address') <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control" name="from-address" placeholder="eg: good@gmail.com" value="{{$whitelist->from}}">
                             </div>
 
                             <div class="form-group">
                                 <label for="dm-project-new-name">
-                                    To Address
+                                    @lang('messages.To Address')
                                 </label>
                                 <div class="input-group">
                                     <input type="text" class="form-control text-right" name="rcpt" placeholder="eg: sales" value="{{$rcpt}}">
@@ -95,10 +95,10 @@
                         <div class="col-lg-8 col-xl-5 offset-lg-4">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success">
-                                    <i class="fa fa-check-circle mr-1"></i> Save entry
+                                    <i class="fa fa-check-circle mr-1"></i> @lang('messages.Save entry')
                                 </button>
                                 <a class="btn btn-warning" href="{{url('/whitelist')}}">
-                                    <i class="fa fa-times-circle mr-1"></i> Cancel
+                                    <i class="fa fa-times-circle mr-1"></i> @lang('messages.Cancel')
                                 </a>
                             </div>
                         </div>

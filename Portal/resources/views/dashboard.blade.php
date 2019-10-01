@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-6 d-md-flex align-items-md-center">
                         <div class="py-4 py-md-0 text-center text-md-left invisible" data-toggle="appear">
-                            <h1 class="font-size-h2 mb-2">Dashboard</h1>
+                            <h1 class="font-size-h2 mb-2">@lang('messages.Dashboard')</h1>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <div class="block-content block-content-full bg-xmodern-op aspect-ratio-16-9 d-flex justify-content-center align-items-center">
                         <div>
                             <div class="font-size-h1 font-w300 text-white">{{$products}}</div>
-                            <div class="font-w600 mt-3 text-uppercase text-white">Products</div>
+                            <div class="font-w600 mt-3 text-uppercase text-white">@lang('messages.Products')</div>
                         </div>
                     </div>
                 </a>
@@ -35,7 +35,7 @@
                     <div class="block-content block-content-full bg-gd-sublime-op aspect-ratio-16-9 d-flex justify-content-center align-items-center">
                         <div>
                             <div class="font-size-h1 font-w300 text-white">{{$domains}}</div>
-                            <div class="font-w600 mt-3 text-uppercase text-white">Domains</div>
+                            <div class="font-w600 mt-3 text-uppercase text-white">@lang('messages.Domains')</div>
                         </div>
                     </div>
                 </a>

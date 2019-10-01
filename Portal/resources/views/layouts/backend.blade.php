@@ -116,52 +116,52 @@ MAIN CONTENT LAYOUT
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('dashboard*') ? ' active' : '' }}" href="{{url('/dashboard')}}">
                         <i class="nav-main-link-icon si si-cursor"></i>
-                        <span class="nav-main-link-name">Dashboard</span>
+                        <span class="nav-main-link-name">@lang('messages.Dashboard')</span>
                     </a>
                 </li>
-                <li class="nav-main-heading">Base</li>
+                <li class="nav-main-heading">@lang('messages.Base')</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('domain*') ? ' active' : '' }}"
                        href="{{url('/domains')}}">
                         <i class="nav-main-link-icon si si-globe"></i>
-                        <span class="nav-main-link-name">Domains</span>
+                        <span class="nav-main-link-name">@lang('messages.Domains')</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('product*') ? ' active' : '' }}"
                        href="{{url('/products')}}">
                         <i class="nav-main-link-icon si si-puzzle"></i>
-                        <span class="nav-main-link-name">Products</span>
+                        <span class="nav-main-link-name">@lang('messages.Products')</span>
                     </a>
                 </li>
-                <li class="nav-main-heading">Filter</li>
+                <li class="nav-main-heading">@lang('messages.Filter')</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('statistics*') ? ' active' : '' }}"
                        href="{{url('/statistics')}}">
                         <i class="nav-main-link-icon si si-pie-chart"></i>
-                        <span class="nav-main-link-name">Statistics</span>
+                        <span class="nav-main-link-name">@lang('messages.Statistics')</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('search*') ? ' active' : '' }}"
                        href="{{url('/search')}}">
                         <i class="nav-main-link-icon si si-magnifier"></i>
-                        <span class="nav-main-link-name">Search</span>
+                        <span class="nav-main-link-name">@lang('messages.Search')</span>
                     </a>
                 </li>
-                <li class="nav-main-heading">Settings</li>
+                <li class="nav-main-heading">@lang('messages.Settings')</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('whitelist*') ? ' active' : '' }}"
                        href="{{url('/whitelist')}}">
                         <i class="nav-main-link-icon fa fa-list"></i>
-                        <span class="nav-main-link-name">Whitelist</span>
+                        <span class="nav-main-link-name">@lang('messages.Whitelist')</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('blacklist*') ? ' active' : '' }}"
                        href="{{url('/blacklist')}}">
                         <i class="nav-main-link-icon fa fa-list-alt"></i>
-                        <span class="nav-main-link-name">Blacklist</span>
+                        <span class="nav-main-link-name">@lang('messages.Blacklist')</span>
                     </a>
                 </li>
             </ul>
@@ -196,20 +196,39 @@ MAIN CONTENT LAYOUT
                     </button>
                     <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
                         <div class="bg-primary-darker rounded-top font-w600 text-white text-center p-3">
-                            User Options
+                            @lang('messages.User Options')
                         </div>
                         <div class="p-2">
                             <a class="dropdown-item" href="{{url('/profile')}}">
-                                <i class="far fa-fw fa-user mr-1"></i> Profile
+                                <i class="far fa-fw fa-user mr-1"></i> @lang('messages.Profile')
                             </a>
                             <div role="separator" class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{url('/logout')}}">
-                                <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i> Sign Out
+                                <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i> @lang('messages.Sign Out')
                             </a>
                         </div>
                     </div>
                 </div>
                 <!-- END User Dropdown -->
+
+                <div class="dropdown d-inline-block">
+                    <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-fw fa-user d-sm-none"></i>
+                        <span class="d-none d-sm-inline-block">{{Session::get('locale') ? Session::get('locale') : 'en'}}</span>
+                        <i class="fa fa-fw fa-angle-down ml-1 d-none d-sm-inline-block"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
+                        <div class="p-2">
+                            <a class="dropdown-item" href="{{url('/locale/en')}}">
+                                EN
+                            </a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{url('/locale/de')}}">
+                                DE
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <!-- END Right Section -->
