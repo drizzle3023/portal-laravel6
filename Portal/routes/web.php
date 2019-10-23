@@ -63,29 +63,46 @@ Route::middleware('user-auth')->group(function (){
 
 });
 
-Route::middleware('admin-auth')->group(function (){
-    Route::prefix('employees')->group(function () {
+Route::middleware('sales-auth')->group(function (){
+    Route::prefix('customer')->group(function () {
 
-        Route::get('/', 'AdminController@showEmployeesPage');
-        Route::get('/add', 'AdminController@showEmployeeAddPage');
-        Route::post('/add', 'AdminController@addEmployee');
-        Route::get('/edit/{id}', 'AdminController@showEmployeeEditPage');
-        Route::post('/edit', 'AdminController@editEmployee');
-        Route::post('/del', 'AdminController@delEmployee');
-        Route::post('/toggle-enable', 'AdminController@toggleEmployeeEnable');
-    });
-
-    Route::prefix('customers')->group(function () {
-
+        Route::get('/', 'AdminController@showCustomerListPage');
         Route::get('/add', 'AdminController@showCustomerAddPage');
         Route::post('/add', 'AdminController@addCustomer');
         Route::get('/edit/{id}', 'AdminController@showCustomerEditPage');
         Route::post('/edit', 'AdminController@editCustomer');
-        Route::post('/del', 'AdminController@delCustomer');
-        Route::post('/toggle-enable', 'AdminController@toggleCustomerEnable');
-        Route::get('/print-invoice/{id}', 'AdminController@showCustomerInvoicePrintPreviewPage');
-        Route::get('/print-invoice/{id}/print', 'AdminController@printCustomerInvoice');
-        Route::post('/resuscitate-customer', 'AdminController@resuscitateCustomer');
+        Route::post('/delete', 'AdminController@deleteCustomer');
+    });
 
+    Route::prefix('domains')->group(function () {
+        Route::get('/{id}', 'AdminController@showDomainPage');
+        Route::get('/{id}/add', 'AdminController@showDomainAddPage');
+        Route::post('/add', 'AdminController@addDomain');
+        Route::get('/edit/{id}', 'AdminController@showDomainEditPage');
+        Route::post('/edit', 'AdminController@editDomain');
+        Route::post('/delete', 'AdminController@deleteDomain');
+    });
+
+    Route::prefix('products')->group(function () {
+        Route::get('/{id}', 'AdminController@showProductsPage');
+        Route::get('/{id}/add', 'AdminController@showProductAddPage');
+        Route::post('/add', 'AdminController@addProduct');
+        Route::get('/edit/{id}', 'AdminController@showProductEditPage');
+        Route::post('/edit', 'AdminController@editProduct');
+        Route::post('/delete', 'AdminController@deleteProduct');
+    });
+
+});
+
+
+Route::middleware('admin-auth')->group(function (){
+    Route::prefix('salesperson')->group(function () {
+
+        Route::get('/', 'AdminController@showSalespersonPage');
+        Route::get('/add', 'AdminController@showSalespersonAddPage');
+        Route::post('/add', 'AdminController@addSalesperson');
+        Route::get('/edit/{id}', 'AdminController@showSalespersonEditPage');
+        Route::post('/edit', 'AdminController@editSalesperson');
+        Route::post('/delete', 'AdminController@delSalesperson');
     });
 });

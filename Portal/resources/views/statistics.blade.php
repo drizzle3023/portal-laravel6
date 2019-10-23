@@ -59,6 +59,10 @@
                                     <label class="custom-control-label" for="example-radio-custom-inline1">@lang('messages.Day')</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                    <input type="radio" class="custom-control-input" id="example-radio-custom-inline4" name="stats_type" value="4" @if(isset($stats_type) && $stats_type == 4) checked @endif>
+                                    <label class="custom-control-label" for="example-radio-custom-inline4">@lang('messages.Week')</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                     <input type="radio" class="custom-control-input" id="example-radio-custom-inline2" name="stats_type" value="2" @if(isset($stats_type) && $stats_type == 2) checked @endif>
                                     <label class="custom-control-label" for="example-radio-custom-inline2">@lang('messages.Month')</label>
                                 </div>
@@ -167,7 +171,35 @@
     <script src="{{asset('js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
     <!-- Page JS Code -->
-    <script src="{{asset('js/pages/be_tables_datatables.min.js')}}"></script>
+
 
     <script>jQuery(function(){ Dashmix.helpers(['datepicker']); });</script>
+    <script>
+        jQuery.extend(jQuery.fn.dataTable.ext.classes, {
+            sWrapper: "dataTables_wrapper dt-bootstrap4",
+            sFilterInput: "form-control",
+            sLengthSelect: "form-control"
+        }), jQuery.extend(!0, $.fn.dataTable.defaults, {
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: "Page <strong>_PAGE_</strong> of <strong>_PAGES_</strong>",
+                paginate: {
+                    first: '<i class="fa fa-angle-double-left"></i>',
+                    previous: '<i class="fa fa-angle-left"></i>',
+                    next: '<i class="fa fa-angle-right"></i>',
+                    last: '<i class="fa fa-angle-double-right"></i>'
+                }
+            }
+        }), jQuery(".js-dataTable-full-pagination").dataTable({
+            pagingType: "full_numbers",
+            pageLength: 10,
+            lengthMenu: [
+                [5, 10, 20, 100],
+                [5, 10, 20, 100]
+            ],
+            autoWidth: !1
+        });
+    </script>
 @endsection

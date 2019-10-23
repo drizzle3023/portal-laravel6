@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Customer extends Model
+class SalesPerson extends Model
 {
     //
-    protected $table = 'customer';
+    protected $table = 'salesperson';
 
     public $timestamps = false;
 

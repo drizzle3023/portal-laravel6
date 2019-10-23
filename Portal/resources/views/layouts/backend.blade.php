@@ -119,51 +119,84 @@ MAIN CONTENT LAYOUT
                         <span class="nav-main-link-name">@lang('messages.Dashboard')</span>
                     </a>
                 </li>
-                <li class="nav-main-heading">@lang('messages.Base')</li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('domain*') ? ' active' : '' }}"
-                       href="{{url('/domains')}}">
-                        <i class="nav-main-link-icon si si-globe"></i>
-                        <span class="nav-main-link-name">@lang('messages.Domains')</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('product*') ? ' active' : '' }}"
-                       href="{{url('/products')}}">
-                        <i class="nav-main-link-icon si si-puzzle"></i>
-                        <span class="nav-main-link-name">@lang('messages.Products')</span>
-                    </a>
-                </li>
-                <li class="nav-main-heading">@lang('messages.Filter')</li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('statistics*') ? ' active' : '' }}"
-                       href="{{url('/statistics')}}">
-                        <i class="nav-main-link-icon si si-pie-chart"></i>
-                        <span class="nav-main-link-name">@lang('messages.Statistics')</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('search*') ? ' active' : '' }}"
-                       href="{{url('/search')}}">
-                        <i class="nav-main-link-icon si si-magnifier"></i>
-                        <span class="nav-main-link-name">@lang('messages.Search')</span>
-                    </a>
-                </li>
-                <li class="nav-main-heading">@lang('messages.Settings')</li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('whitelist*') ? ' active' : '' }}"
-                       href="{{url('/whitelist')}}">
-                        <i class="nav-main-link-icon fa fa-list"></i>
-                        <span class="nav-main-link-name">@lang('messages.Whitelist')</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('blacklist*') ? ' active' : '' }}"
-                       href="{{url('/blacklist')}}">
-                        <i class="nav-main-link-icon fa fa-list-alt"></i>
-                        <span class="nav-main-link-name">@lang('messages.Blacklist')</span>
-                    </a>
-                </li>
+                @if(Session::get('user-type')===1)
+                    <li class="nav-main-heading">@lang('messages.User Management')</li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('salesperson*') ? ' active' : '' }}"
+                           href="{{url('/salesperson')}}">
+                            <i class="nav-main-link-icon si si-user"></i>
+                            <span class="nav-main-link-name">@lang('messages.Salesperson')</span>
+                        </a>
+                    </li>
+                @elseif(Session::get('user-type')===2)
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('customer*') ? ' active' : '' }}"
+                           href="{{url('/customer')}}">
+                            <i class="nav-main-link-icon si si-user"></i>
+                            <span class="nav-main-link-name">@lang('messages.Customers')</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('domain*') ? ' active' : '' }}"
+                           href="{{url('/domains')}}">
+                            <i class="nav-main-link-icon si si-globe"></i>
+                            <span class="nav-main-link-name">@lang('messages.Domains')</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('product*') ? ' active' : '' }}"
+                           href="{{url('/products')}}">
+                            <i class="nav-main-link-icon si si-puzzle"></i>
+                            <span class="nav-main-link-name">@lang('messages.Products')</span>
+                        </a>
+                    </li>
+                @elseif(Session::get('user-type')===3)
+                    <li class="nav-main-heading">@lang('messages.Base')</li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('domain*') ? ' active' : '' }}"
+                           href="{{url('/domains')}}">
+                            <i class="nav-main-link-icon si si-globe"></i>
+                            <span class="nav-main-link-name">@lang('messages.Domains')</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('product*') ? ' active' : '' }}"
+                           href="{{url('/products')}}">
+                            <i class="nav-main-link-icon si si-puzzle"></i>
+                            <span class="nav-main-link-name">@lang('messages.Products')</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-heading">@lang('messages.Filter')</li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('statistics*') ? ' active' : '' }}"
+                           href="{{url('/statistics')}}">
+                            <i class="nav-main-link-icon si si-pie-chart"></i>
+                            <span class="nav-main-link-name">@lang('messages.Statistics')</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('search*') ? ' active' : '' }}"
+                           href="{{url('/search')}}">
+                            <i class="nav-main-link-icon si si-magnifier"></i>
+                            <span class="nav-main-link-name">@lang('messages.Search')</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-heading">@lang('messages.Settings')</li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('whitelist*') ? ' active' : '' }}"
+                           href="{{url('/whitelist')}}">
+                            <i class="nav-main-link-icon fa fa-list"></i>
+                            <span class="nav-main-link-name">@lang('messages.Whitelist')</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('blacklist*') ? ' active' : '' }}"
+                           href="{{url('/blacklist')}}">
+                            <i class="nav-main-link-icon fa fa-list-alt"></i>
+                            <span class="nav-main-link-name">@lang('messages.Blacklist')</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
         <!-- END Side Navigation -->

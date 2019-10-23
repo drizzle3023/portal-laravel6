@@ -14,4 +14,8 @@ class Product extends Model
     public function domain() {
         return $this->hasOne(Domain::class, 'id', 'domain_id');
     }
+
+    public function customer() {
+        return $this->hasOne(Customer::class, 'id', 'customer_id');
+    }
 }

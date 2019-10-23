@@ -2,6 +2,7 @@
 
 @section('css_before')
     <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{asset('js/plugins/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('js/plugins/datatables/dataTables.bootstrap4.css')}}">
     <link rel="stylesheet" href="{{asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css')}}">
 @endsection
@@ -11,11 +12,11 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">@lang('messages.Whitelist')</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">@lang('messages.Salesperson list')</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">@lang('messages.App')</li>
-                        <li class="breadcrumb-item active" aria-current="page">@lang('messages.Whitelist')</li>
+                        <li class="breadcrumb-item active" aria-current="page">@lang('messages.Salesperson list')</li>
                     </ol>
                 </nav>
             </div>
@@ -27,47 +28,33 @@
     <div class="content">
         <div class="block block-rounded block-bordered">
             <div class="block-header block-header-default d-flex justify-content-between">
-                <h3 class="block-title">@lang('messages.Whitelist')</h3>
+                <h3 class="block-title">@lang('messages.Salesperson list')</h3>
                 <a class="" href="#" data-toggle="modal" data-target="#help-modal">
                     <i class="si si-question"></i></a>
             </div>
             <div class="block-content block-content-full">
                 <div style="margin-bottom: 10px; display: flex; justify-content: space-between;">
-                    <a class="btn btn-primary" href="{{url('/whitelist/add')}}">
-                        <i class="si si-plus"></i> @lang('messages.Add entry')</a>
+                    <a class="btn btn-primary" href="{{url('/salesperson/add')}}">
+                        <i class="si si-plus"></i> @lang('messages.Add')</a>
                 </div>
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full-pagination">
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
-                        <th class="d-none d-sm-table-cell" style="">@lang('messages.From')</th>
-                        <th class="d-none d-sm-table-cell" style="">@lang('messages.To')</th>
-                        <th class="d-none d-sm-table-cell" style="width: 150px;">@lang('messages.Enable')</th>
-                        <th class="d-none d-sm-table-cell" style="width: 150px;">@lang('messages.Action')</th>
+                        <th class="d-none d-sm-table-cell" style="">@lang('messages.Email')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 200px;">@lang('messages.Action')</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($whitelist_array as $one)
+                    @foreach($salesperson_array as $one)
                         <tr>
                             <td class="text-center">{{$loop->iteration}}</td>
                             <td class="d-none d-sm-table-cell">
-                                {{$one->from}}
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                {{$one->rcpt}}
-                            </td>
-                            <td class="d-none d-sm-table-cell text-center">
-                                <div class="custom-control custom-switch custom-control custom-control-inline mb-2"
-                                     align="center">
-                                    <input type="checkbox" class="custom-control-input"
-                                           id="enable-toggle-{{$one->id}}" name="enable-toggle-{{$one->id}}"
-                                           @if($one->is_enabled == 1) checked @endif>
-                                    <label class="custom-control-label" for="enable-toggle-{{$one->id}}"></label>
-                                </div>
+                                {{$one->email}}
                             </td>
                             <td class="d-none d-sm-table-cell text-center">
                                 <div class="btn-group">
-                                    <a href="{{url('/whitelist/edit').'/'.$one->id}}"
+                                    <a href="{{url('/salesperson/edit').'/'.$one->id}}"
                                        class="btn btn-sm btn-primary" data-toggle="tooltip" title="@lang('messages.Edit')">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
@@ -121,9 +108,9 @@
 
     <script>
         function deleteWL(id) {
-            if (confirm("Do you want delete this Whitelist?")) {
+            if (confirm("Do you want delete this salesperson?")) {
                 $.ajax({
-                    url: '{{url('/whitelist/delete')}}',
+                    url: '{{url('/salesperson/delete')}}',
                     type: "POST",
                     data: {
                         "id": id,
@@ -139,24 +126,5 @@
             }
         }
 
-        $(document).ready(function () {
-            $("[name^='enable-toggle-']").on('change', function () {
-                var id = this.name.split("enable-toggle-")[1];
-                $.ajax({
-                    url: '{{url('/whitelist/toggle-enable')}}',
-                    type: "POST",
-                    data: {
-                        "id": id,
-                    },
-                    error: function () {
-                    },
-                    success: function (data) {
-                        if (data.message.length == 0) {
-                            //window.location.reload();
-                        }
-                    }
-                });
-            });
-        });
     </script>
 @endsection
