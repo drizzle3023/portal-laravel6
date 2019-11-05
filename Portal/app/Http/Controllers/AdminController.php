@@ -130,7 +130,7 @@ class AdminController
     }
 
     function randomPassword() {
-        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-=_+,./<>?~';
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()';
         $pass = array(); //remember to declare $pass as an array
         $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
         for ($i = 0; $i < 20; $i++) {
@@ -158,6 +158,7 @@ class AdminController
             $current_user_id = session()->get('user')->id;
             $products = Product::where('customer_id', $current_user_id)->count();
             $domains = Domain::where('customer_id', $current_user_id)->count();
+            $customers = 0;
         }
 
         return view('dashboard')->with([
@@ -1066,49 +1067,122 @@ class AdminController
         }
         request()->validate($rule, $custom_message);
 
-        $domain = Domain::where('id', $domain_id)->first();
-        if(isset($domain)) {
-            $domain_name = $domain->domain;
-            if (isset($rcpt) && $rcpt != '') {
-                $rcpt .= '@' . $domain_name;
-            } else $rcpt = $domain_name;
-        } else {
-            return back()->with('fail', 'Currently selected domain is not correct.');
+        for ($i = 0; $i < count($domain_id); $i ++) {
+            $domain = Domain::where('id', $domain_id[$i])->first();
+            if(isset($domain)) {
+                $domain_name = $domain->domain;
+                if (isset($rcpt) && $rcpt != '') {
+                    $rcpt .= '@' . $domain_name;
+                } else $rcpt = $domain_name;
+            } else {
+                return back()->with('fail', 'Currently selected domain is not correct.');
+            }
+
+            if (!isset($from)) $from = '';
+
+            // Check if already exist in blacklist or whitelist
+            if (Blacklist::where([
+                    ['customer_id', $current_user_id],
+                    ['from', $from],
+                    ['rcpt', $rcpt]
+                ])->count() > 0) {
+                return back()
+                    ->with([
+                        'fail' => 'Sender already in Blacklist.',
+                        'data' => 'From Address: ' . $from . " -> To Address: " . $rcpt,
+                    ]);
+            }
+
+            if (Whitelist::where([
+                    ['customer_id', $current_user_id],
+                    ['from', $from],
+                    ['rcpt', $rcpt]
+                ])->count() > 0) {
+                return back()
+                    ->with([
+                        'fail' => 'Sender already in Whitelist.',
+                        'data' => 'From Address: ' . $from . " -> To Address: " . $rcpt,
+                    ]);
+            }
+
+            $whitelist = new Whitelist();
+            $whitelist->customer_id = $current_user_id;
+            $whitelist->from = $from;
+            $whitelist->rcpt = $rcpt;
+            $whitelist->is_enabled = 1;
+            $whitelist->save();
+
         }
-
-        if (!isset($from)) $from = '';
-
-        // Check if already exist in blacklist or whitelist
-        if (Blacklist::where([
-            ['customer_id', $current_user_id],
-            ['from', $from],
-            ['rcpt', $rcpt]
-        ])->count() > 0) {
-            return back()
-                ->with('fail', 'Sender already in Blacklist.');
-        }
-
-        if (Whitelist::where([
-                ['customer_id', $current_user_id],
-                ['from', $from],
-                ['rcpt', $rcpt]
-            ])->count() > 0) {
-            return back()
-                ->with('fail', 'Sender already in Whitelist.');
-        }
-
-        $whitelist = new Whitelist();
-        $whitelist->customer_id = $current_user_id;
-        $whitelist->from = $from;
-        $whitelist->rcpt = $rcpt;
-        $whitelist->is_enabled = 1;
-        $whitelist->save();
 
         $this->saveBlackAndWhitelistToFile();
         $this->saveWhitelistRcptToFile();
 
         return back()
             ->with('success', 'You have successfully add new whitelist.');
+    }
+
+    public function addSenderFromSearchResult() {
+        $msg_id = request('id');
+        $type = request('type');
+
+        if (isset($msg_id)) {
+            $log_msg = Log::where('msg_id', "$msg_id")->first();
+
+            if (isset($log_msg)) {
+                $sender = $log_msg->msg_from;
+                $tmp_1 = explode('<', $sender);
+
+                if (count($tmp_1) > 1){
+                    $tmp_2 = explode('>', $tmp_1[1]);
+
+                    if (count($tmp_2) > 1) {
+                        $sender_email = $tmp_2[0];
+                        $customer_id = session()->get('user')->id;
+                        $domain_list = Domain::where('customer_id', $customer_id)->get();
+
+                        $from = '';
+                        if ($type == 1 || $type == 3) {
+                            $from = $sender_email;
+                        } else if ($type == 2 || $type == 4) {
+                            $from = '@' . explode('@', $sender_email)[1];
+                        }
+
+                        for ($i = 0; $i < count($domain_list); $i ++) {
+
+                            $rcpt = $domain_list[$i]['domain'];
+                            //Check if already exist
+                            if (Blacklist::where([
+                                    ['customer_id', $customer_id],
+                                    ['from', $from],
+                                    ['rcpt', $rcpt]
+                                ])->count() > 0 ||
+                                Whitelist::where([
+                                    ['customer_id', $customer_id],
+                                    ['from', $from],
+                                    ['rcpt', $rcpt]
+                                ])->count() > 0) {
+                                continue;
+                            }
+
+                            $whitelist = new Whitelist();
+                            $whitelist->customer_id = $customer_id;
+                            $whitelist->from = $from;
+                            $whitelist->rcpt = $rcpt;
+                            $whitelist->is_enabled = 1;
+                            $whitelist->save();
+
+                            $blacklist = new Blacklist();
+                            $blacklist->customer_id = $customer_id;
+                            $blacklist->from = $from;
+                            $blacklist->rcpt = $rcpt;
+                            $blacklist->is_enabled = 1;
+                            $blacklist->save();
+                        }
+                    }
+                }
+            }
+        }
+        return Utils::makeResponse();
     }
 
     public function showEditWhitelistPage() {
@@ -1316,43 +1390,51 @@ class AdminController
         }
         request()->validate($rule, $custom_message);
 
-        $domain = Domain::where('id', $domain_id)->first();
-        if(isset($domain)) {
-            $domain_name = $domain->domain;
-            if ($rcpt != '') {
-                $rcpt .= '@' . $domain_name;
-            } else $rcpt = $domain_name;
-        } else {
-            return back()->with('fail', 'Currently selected domain is not correct.');
+        for ($i = 0; $i < count($domain_id); $i ++) {
+            $domain = Domain::where('id', $domain_id[$i])->first();
+            if (isset($domain)) {
+                $domain_name = $domain->domain;
+                if ($rcpt != '') {
+                    $rcpt .= '@' . $domain_name;
+                } else $rcpt = $domain_name;
+            } else {
+                return back()->with('fail', 'Currently selected domain is not correct.');
+            }
+
+            if (!isset($from)) $from = '';
+
+            // Check if already exist in blacklist or whitelist
+            if (Blacklist::where([
+                    ['customer_id', $current_user_id],
+                    ['from', $from],
+                    ['rcpt', $rcpt]
+                ])->count() > 0) {
+                return back()
+                    ->with([
+                        'fail' => 'Sender already in Blacklist.',
+                        'data' => 'From Address: ' . $from . " -> To Address: " . $rcpt,
+                    ]);
+            }
+
+            if (Whitelist::where([
+                    ['customer_id', $current_user_id],
+                    ['from', $from],
+                    ['rcpt', $rcpt]
+                ])->count() > 0) {
+                return back()
+                    ->with([
+                        'fail' => 'Sender already in Whitelist.',
+                        'data' => 'From Address: ' . $from . " -> To Address: " . $rcpt,
+                    ]);
+            }
+
+            $blacklist = new Blacklist();
+            $blacklist->customer_id = $current_user_id;
+            $blacklist->from = $from;
+            $blacklist->rcpt = $rcpt;
+            $blacklist->is_enabled = 1;
+            $blacklist->save();
         }
-
-        if (!isset($from)) $from = '';
-
-        // Check if already exist in blacklist or whitelist
-        if (Blacklist::where([
-                ['customer_id', $current_user_id],
-                ['from', $from],
-                ['rcpt', $rcpt]
-            ])->count() > 0) {
-            return back()
-                ->with('fail', 'Sender already in Blacklist.');
-        }
-
-        if (Whitelist::where([
-                ['customer_id', $current_user_id],
-                ['from', $from],
-                ['rcpt', $rcpt]
-            ])->count() > 0) {
-            return back()
-                ->with('fail', 'Sender already in Whitelist.');
-        }
-
-        $blacklist = new Blacklist();
-        $blacklist->customer_id = $current_user_id;
-        $blacklist->from = $from;
-        $blacklist->rcpt = $rcpt;
-        $blacklist->is_enabled = 1;
-        $blacklist->save();
 
         $this->saveBlackAndWhitelistToFile();
         $this->saveWhitelistRcptToFile();

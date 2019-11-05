@@ -49,6 +49,8 @@ Route::middleware('user-auth')->group(function (){
         Route::post('/edit', 'AdminController@editWhitelist');
         Route::post('/delete', 'AdminController@deleteWhitelist');
         Route::post('/toggle-enable', 'AdminController@toggleWhitelistEnable');
+        Route::post('/add-sender-from-search-result', 'AdminController@addSenderFromSearchResult');
+
     });
 
     Route::prefix('blacklist')->group(function () {

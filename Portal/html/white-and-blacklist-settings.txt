@@ -1,142 +1,142 @@
 #blacklist
 
-otNktA1b {
+WkOSyg1b {
 from = "bad-sender@bad.com";
 rcpt = "sales@cubewerk.de";
 apply {
 actions {
-reject = yes;
+reject = -10;
 }
 }
 }
 
-lZRtzo2b {
+6kqCQD2b {
 from = "virussender@gmail.com";
 rcpt = "support@cubewerk.at";
 apply {
 actions {
-reject = yes;
+reject = -10;
 }
 }
 }
 
-S3prc23b {
+gQggNA3b {
 from = "baddomain.cc";
 rcpt = "ceo@plzk.de";
 apply {
 actions {
-reject = yes;
+reject = -10;
 }
 }
 }
 
-XOGrXV7b {
+k8iSEg7b {
 from = "@gmail.com";
 rcpt = "@cubewerk.eu";
 apply {
 actions {
-reject = yes;
+reject = -10;
 }
 }
 }
 
-mBn7OA8b {
+nrfIYo8b {
 from = "gmail.com";
 rcpt = "@cubewerk.eu";
 apply {
 actions {
-reject = yes;
+reject = -10;
 }
 }
 }
 
 #whitelist
 
-P3eKcy1w {
-from = "good-sender@hotmail.com";
+yKBuVy1w {
+from = "good-sender1@hotmail.com";
 rcpt = "@cubewerk.de";
 want_spam = yes;
 }
 
-QbDQhi2w {
+PDXp4d2w {
 from = "microsoft.com";
 rcpt = "sales@cubewerk.at";
 want_spam = yes;
 }
 
-aWz02R7w {
+kZFAYz7w {
 from = "good-sender@hotmail.com";
 rcpt = "@cubewerk.de";
 want_spam = yes;
 }
 
-opAXll8w {
+uNeReZ8w {
 from = "sdf";
 rcpt = "123@plzk.de";
 want_spam = yes;
 }
 
-3G3biZ11w {
+K1iZXG11w {
 from = "123";
 rcpt = "@cubewerk.de";
 want_spam = yes;
 }
 
-R6JOjN12w {
+9F4vEH12w {
 from = "````";
 rcpt = "@plzk.de";
 want_spam = yes;
 }
 
-nfMeyz13w {
+mz04eG13w {
 from = "1212";
 rcpt = "@plzk.de";
 want_spam = yes;
 }
 
-xcvtW714w {
+2A63MH14w {
 from = "adfsadf@gmail.com";
 rcpt = "@cubewerk.eu";
 want_spam = yes;
 }
 
-93QVKx15w {
+E9kmXK15w {
 from = "```@gmail.com";
 rcpt = "@plzk.de";
 want_spam = yes;
 }
 
-gtSKM416w {
+9dBNA516w {
 from = "``~~~~@asd.com";
 rcpt = "@cubewerk.eu";
 want_spam = yes;
 }
 
-tdTGED17w {
+bpqqIX17w {
 from = "12121212";
 rcpt = "@cubewerk.at";
 want_spam = yes;
 }
 
-qFcYHB18w {
+GsfBnt18w {
 from = "123123123";
 rcpt = "@plzk.de";
 want_spam = yes;
 }
 
-PdRRHn22w {
+C2Tfv122w {
 from = "```@gmail.com";
 rcpt = "@cubewerk.at";
 want_spam = yes;
 }
 
-dHs2Ow24w {
+wqWYQE24w {
 from = "@gmail.com";
 rcpt = "@plzk.de";
 want_spam = yes;
 }
 
-WJXqly25w {
+kwsQ3325w {
 from = "good-sender@hotmail.com";
 rcpt = "@plzk.de";
 want_spam = yes;

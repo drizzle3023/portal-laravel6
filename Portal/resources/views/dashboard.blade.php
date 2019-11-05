@@ -43,7 +43,7 @@
                 </div>
             @else
                 <div class="col-4 col-md-4 col-xl-4">
-                    <a class="block text-center bg-image" style="background-image: url({{asset('media/photos/photo18.jpg')}});" href="{{url('/customers')}}">
+                    <a class="block text-center bg-image" style="background-image: url({{asset('media/photos/photo18.jpg')}});" href="{{url('/customer')}}">
                         <div class="block-content block-content-full bg-gd-sublime-op aspect-ratio-16-9 d-flex justify-content-center align-items-center">
                             <div>
                                 <div class="font-size-h1 font-w300 text-white">{{$customers}}</div>

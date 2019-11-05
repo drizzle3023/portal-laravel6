@@ -68,13 +68,15 @@
                                 <label for="dm-project-new-name">
                                     @lang('messages.Customer')
                                 </label>
-                                <select class="js-select2 form-control" name="customer-id" style="width: 100%;" data-placeholder="Choose one.." disabled>
+                                <!-- <select class="js-select2 form-control" name="customer-id" style="width: 100%;" data-placeholder="Choose one.." disabled> -->
                                     @foreach($customer_array as $customer)
-                                        <option value="{{$customer->id}}" @if($customer->id == $selected_customer_id) selected @endif>
+                                        <!-- <option value="{{$customer->id}}" @if($customer->id == $selected_customer_id) selected @endif>
                                             {{$customer->email}}
-                                        </option>
+                                        </option> -->
+                                        <?php $selected_customer = $customer->email;?>
                                     @endforeach
-                                </select>
+                                <!-- </select> -->
+                                <input type="text" class="form-control" name="customer-id" value="{{$selected_customer}}" disabled="">
                                 <input type="hidden" name="customer-id" value="{{$selected_customer_id}}">
                             </div>
                             <div class="form-group">

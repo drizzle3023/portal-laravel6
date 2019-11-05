@@ -42,7 +42,7 @@
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
                         <th class="d-none d-sm-table-cell" style="">@lang('messages.Email')</th>
-                        <th class="d-none d-sm-table-cell" style="width: 500px;">@lang('messages.First login password')</th>
+                        <!-- <th class="d-none d-sm-table-cell" style="width: 500px;">@lang('messages.First login password')</th> -->
                         <th class="d-none d-sm-table-cell" style="width: 200px;">@lang('messages.Action')</th>
                     </tr>
                     </thead>
@@ -53,9 +53,9 @@
                             <td class="d-none d-sm-table-cell">
                                 {{$one->email}}
                             </td>
-                            <td class="d-none d-sm-table-cell">
+                            <!-- <td class="d-none d-sm-table-cell">
                                 {{$one->first_login_password}}
-                            </td>
+                            </td> -->
                             <td class="d-none d-sm-table-cell text-center">
                                 <div class="btn-group">
 {{--                                    <a href="{{url('/customer/edit').'/'.$one->id}}"--}}

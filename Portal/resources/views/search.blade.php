@@ -98,6 +98,7 @@
                         <th class="d-none d-sm-table-cell" style="width: 250px;">@lang('messages.Time')</th>
                         <th class="d-none d-sm-table-cell" style="width: 30%;">@lang('messages.Message From')</th>
                         <th class="d-none d-sm-table-cell" style="width: 30%;">@lang('messages.Message To')</th>
+                        <th class="d-none d-sm-table-cell" style="width: 250px;">@lang('messages.Type')</th>
                         <th class="d-none d-sm-table-cell" style="width: 250px;">@lang('messages.Action')</th>
                     </tr>
                     </thead>
@@ -114,7 +115,7 @@
                             <td class="d-none d-sm-table-cell">
                                 {{$one->msg_to}}
                             </td>
-                            <td class="d-none d-sm-table-cell">
+                            <td class="d-none d-sm-table-cell text-center">
                                 @if($one->action == 'sent')
                                     <span class="badge badge-success">{{$one->action}}</span>
                                 @elseif($one->action == 'spam')
@@ -124,7 +125,28 @@
                                 @else
                                     <span class="badge badge-danger">{{$one->action}}</span>
                                 @endif
-
+                            </td>
+                            <td class="d-sm-table-cell text-center">
+                                <div class="btn-group">
+                                    <a href="javascript:addSenderTW('{{$one->msg_id}}', 1);"
+                                       class="btn btn-sm btn-info" data-toggle="tooltip" title="@lang('messages.Whitelist Sender')">
+                                        <i class="si si-user"></i>
+                                    </a>
+                                    <a href="javascript:addSenderTW('{{$one->msg_id}}', 2);" class="btn btn-sm btn-primary"
+                                       data-toggle="tooltip" title="@lang('messages.Whitelist Sender Domain')">
+                                        <i class="si si-globe"></i>
+                                    </a>
+                                </div>
+                                <div class="btn-group">
+                                    <a href="javascript:addSenderTW('{{$one->msg_id}}', 3);"
+                                       class="btn btn-sm btn-secondary" data-toggle="tooltip" title="@lang('messages.Blacklist Sender Domain')">
+                                        <i class="si si-user"></i>
+                                    </a>
+                                    <a href="javascript:addSenderTW('{{$one->msg_id}}', 4);" class="btn btn-sm btn-dark"
+                                       data-toggle="tooltip" title="@lang('messages.Blacklist Sender Domain')">
+                                        <i class="si si-globe"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -139,7 +161,7 @@
             <div class="modal-content">
                 <div class="block block-themed block-transparent mb-0" >
                     <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">Modal Title</h3>
+                        <h3 class="block-title">@lang('messages.Search_modal_title')</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-fw fa-times"></i>
@@ -147,7 +169,7 @@
                         </div>
                     </div>
                     <div class="block-content">
-                        Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.
+                        @lang('messages.Search_modal_body')
                     </div>
                     <div class="block-content block-content-full text-right bg-light">
                         <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
@@ -195,5 +217,34 @@
             ],
             autoWidth: !1
         });
+
+        function addSenderTW(id, type) {
+            var msg = "@lang('messages.Do you want to add this sender to Whitelist?')";
+            if (type == 2) {
+                msg = "@lang('messages.Do you want to add this sender domain to Whitelist?')";
+            } else if (type == 3) {
+                msg = "@lang('messages.Do you want to add this sender to Blacklist?')";
+            } else if (type == 4) {
+                msg = "@lang('messages.Do you want to add this sender domain to Blacklist?')";
+            }
+            if (confirm(msg)) {
+                $.ajax({
+                    url: '{{url('/whitelist/add-sender-from-search-result')}}',
+                    type: "POST",
+                    data: {
+                        "id": id,
+                        "type": type
+                    },
+                    error: function () {
+                    },
+                    success: function (data) {
+                        if (data.message.length == 0) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        }
+
     </script>
 @endsection

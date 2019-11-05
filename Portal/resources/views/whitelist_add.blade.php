@@ -2,7 +2,7 @@
 
 @section('css_before')
     <!-- Page JS Plugins CSS -->
-    <link rel="stylesheet" href="{{asset('js/plugins/bootstrap-imageupload/css/bootstrap-imageupload.min.css')}}">
+    <link rel="stylesheet" href="{{asset('js/plugins/select2/css/select2.min.css')}}">
 @endsection
 
 @section('content')
@@ -38,7 +38,8 @@
                 @if ($message = Session::get('fail'))
                     <div class="alert alert-danger alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>@lang('messages.'.$message)</strong>
+                        <strong>@lang('messages.'.$message)</strong><br>
+                        <span>{{Session::get('data')}}</span>
                     </div>
                 @endif
 
@@ -78,8 +79,8 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control text-right" name="rcpt" placeholder="eg: sales">
                                     <div class="input-group-append">
-                                        <select class="custom-select" name="domain" style="border-radius: 0px 4px 4px 0px;">
-                                            <option value="0" disabled="disabled" selected>@lang('messages.Domain')</option>
+                                        <select class="js-select2 form-control" name="domain[]" style="border-radius: 0px 4px 4px 0px;" data-placeholder="@lang('messages.Domain')" multiple>
+                                            <option></option>
                                             @foreach($domain_array as $domain)
                                                 <option value="{{$domain->id}}">{{'@'.$domain->domain}}</option>
                                             @endforeach
@@ -114,5 +115,6 @@
 @endsection
 
 @section('js_after')
-
+    <script src="{{asset('js/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script>jQuery(function(){ Dashmix.helpers(['select2']); });</script>
 @endsection
