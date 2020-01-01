@@ -1,8 +1,5 @@
 #whitelist-recipients
 
 plzk.de
-cubewerk.at
-_@cubewerk.eu
-1@plzk.de
 cubewerk.eu
-cubewerk.eu@cubewerk.at
+cubewerk.at

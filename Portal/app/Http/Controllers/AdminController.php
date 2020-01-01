@@ -130,7 +130,7 @@ class AdminController
     }
 
     function randomPassword() {
-        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()';
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890+-!@#$';
         $pass = array(); //remember to declare $pass as an array
         $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
         for ($i = 0; $i < 20; $i++) {
@@ -539,12 +539,8 @@ class AdminController
 
     public function checkDomain() {
         $id = request('id');
-        $current_user_id = session()->get('user')->id;
 
-        if (Domain::where([
-            ['id', $id],
-            ['customer_id', $current_user_id],
-        ])->count() > 0) {
+        if (Domain::where('id', $id)->count() > 0) {
             $domain_name = Domain::where('id', $id)->first()->domain;
 
             $hosts = array();
@@ -560,10 +556,21 @@ class AdminController
             Domain::where('id', $id)->update(['dns_active' => $is_active]);
         }
 
-        $domains = Domain::where('customer_id', $current_user_id)->get();
+        if (session()->get('user-type') == 2) {
+            if (Domain::where('id', $id)->count() > 0) {
+                $selected_customer_id = Domain::where('id', $id)->first()->customer_id;
+            }
+            $customers = Customer::get();
 
-        return view('domain')->with([
-            'domain_array' => $domains
+        } else if (session()->get('user-type') == 3) {
+            $selected_customer_id = session()->get('user')->id;
+            $customers = [];
+        }
+        $domains = Domain::where('customer_id', $selected_customer_id)->get();
+        return back()->with([
+            'domain_array' => $domains,
+            'customer_array' => $customers,
+            'selected_customer_id' => $selected_customer_id
         ]);
 
     }
@@ -1068,12 +1075,13 @@ class AdminController
         request()->validate($rule, $custom_message);
 
         for ($i = 0; $i < count($domain_id); $i ++) {
+            $new_rcpt = '';
             $domain = Domain::where('id', $domain_id[$i])->first();
             if(isset($domain)) {
                 $domain_name = $domain->domain;
                 if (isset($rcpt) && $rcpt != '') {
-                    $rcpt .= '@' . $domain_name;
-                } else $rcpt = $domain_name;
+                    $new_rcpt = $rcpt . '@' . $domain_name;
+                } else $new_rcpt = $domain_name;
             } else {
                 return back()->with('fail', 'Currently selected domain is not correct.');
             }
@@ -1084,31 +1092,31 @@ class AdminController
             if (Blacklist::where([
                     ['customer_id', $current_user_id],
                     ['from', $from],
-                    ['rcpt', $rcpt]
+                    ['rcpt', $new_rcpt]
                 ])->count() > 0) {
                 return back()
                     ->with([
                         'fail' => 'Sender already in Blacklist.',
-                        'data' => 'From Address: ' . $from . " -> To Address: " . $rcpt,
+                        'data' => 'From Address: ' . $from . " -> To Address: " . $new_rcpt,
                     ]);
             }
 
             if (Whitelist::where([
                     ['customer_id', $current_user_id],
                     ['from', $from],
-                    ['rcpt', $rcpt]
+                    ['rcpt', $new_rcpt]
                 ])->count() > 0) {
                 return back()
                     ->with([
                         'fail' => 'Sender already in Whitelist.',
-                        'data' => 'From Address: ' . $from . " -> To Address: " . $rcpt,
+                        'data' => 'From Address: ' . $from . " -> To Address: " . $new_rcpt,
                     ]);
             }
 
             $whitelist = new Whitelist();
             $whitelist->customer_id = $current_user_id;
             $whitelist->from = $from;
-            $whitelist->rcpt = $rcpt;
+            $whitelist->rcpt = $new_rcpt;
             $whitelist->is_enabled = 1;
             $whitelist->save();
 
@@ -1391,12 +1399,13 @@ class AdminController
         request()->validate($rule, $custom_message);
 
         for ($i = 0; $i < count($domain_id); $i ++) {
+            $new_rcpt = '';
             $domain = Domain::where('id', $domain_id[$i])->first();
             if (isset($domain)) {
                 $domain_name = $domain->domain;
                 if ($rcpt != '') {
-                    $rcpt .= '@' . $domain_name;
-                } else $rcpt = $domain_name;
+                    $new_rcpt = $rcpt . '@' . $domain_name;
+                } else $new_rcpt = $domain_name;
             } else {
                 return back()->with('fail', 'Currently selected domain is not correct.');
             }
@@ -1407,31 +1416,31 @@ class AdminController
             if (Blacklist::where([
                     ['customer_id', $current_user_id],
                     ['from', $from],
-                    ['rcpt', $rcpt]
+                    ['rcpt', $new_rcpt]
                 ])->count() > 0) {
                 return back()
                     ->with([
                         'fail' => 'Sender already in Blacklist.',
-                        'data' => 'From Address: ' . $from . " -> To Address: " . $rcpt,
+                        'data' => 'From Address: ' . $from . " -> To Address: " . $new_rcpt,
                     ]);
             }
 
             if (Whitelist::where([
                     ['customer_id', $current_user_id],
                     ['from', $from],
-                    ['rcpt', $rcpt]
+                    ['rcpt', $new_rcpt]
                 ])->count() > 0) {
                 return back()
                     ->with([
                         'fail' => 'Sender already in Whitelist.',
-                        'data' => 'From Address: ' . $from . " -> To Address: " . $rcpt,
+                        'data' => 'From Address: ' . $from . " -> To Address: " . $new_rcpt,
                     ]);
             }
 
             $blacklist = new Blacklist();
             $blacklist->customer_id = $current_user_id;
             $blacklist->from = $from;
-            $blacklist->rcpt = $rcpt;
+            $blacklist->rcpt = $new_rcpt;
             $blacklist->is_enabled = 1;
             $blacklist->save();
         }
